@@ -99,7 +99,7 @@ func (d *ddl) onDropSchema(t *meta.Meta, job *model.Job) error {
 		dbInfo.State = model.StateDeleteOnly
 		err = t.UpdateDatabase(dbInfo)
 	case model.StateDeleteOnly:
-		dbInfo.State = model.StateDeleteReorganization
+		dbInfo.State = model.StateNone
 		tables, err := t.ListTables(job.SchemaID)
 		if err != nil {
 			return errors.Trace(err)

@@ -66,9 +66,9 @@ func testDropSchema(c *C, ctx context.Context, d *ddl, dbInfo *model.DBInfo) (*m
 		SchemaID: dbInfo.ID,
 		Type:     model.ActionDropSchema,
 	}
-
 	err := d.doDDLJob(ctx, job)
 	c.Assert(err, IsNil)
+
 	ver := getSchemaVer(c, ctx)
 	return job, ver
 }
@@ -177,7 +177,7 @@ func checkHistoryJobArgs(c *C, ctx context.Context, id int64, args *historyJobAr
 	if args.tbl != nil {
 		historyJob.DecodeArgs(&v, &tbl)
 		c.Assert(v, Equals, args.ver)
-
+		checkEqualTable(c, tbl, args.tbl)
 		return
 	}
 	// only for create schema job
